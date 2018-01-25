@@ -6,9 +6,14 @@ import morgan from 'morgan'
 import express from 'express'
 import * as mongo from './mongo.js'
 
+
+import {Server} from 'http'
+
 import authRouter from '../router/auth.js'
 import fourOhFour from '../middleware/four-oh-four.js'
 import errorHandler from '../middleware/error-middleware.js'
+
+import io from "./io/io"; 
 
 // STATE
 const app = express()
@@ -32,7 +37,6 @@ const state = {
   http: null,
 }
 
-// INTERFACE 
 export const start = (port) => {
   return new Promise((resolve, reject) => {
     if (state.isOn) 
@@ -40,7 +44,9 @@ export const start = (port) => {
     state.isOn = true
     mongo.start()
     .then(() => {
-      state.http = app.listen(port || process.env.PORT, () => {
+      state.http = Server(app);
+      io(state.http);
+      state.http.listen(port || process.env.PORT, () => {
         console.log('__SERVER_UP__', process.env.PORT)
         resolve()
       })
