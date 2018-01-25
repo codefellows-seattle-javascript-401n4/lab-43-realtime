@@ -1,7 +1,6 @@
 import User from '../../../model/user.js'
 
 const LOGIN = (socket) => (payload) => {
-    
     let tokenSeed = payload.tokenSeed;
     
     User.findOne({tokenSeed})
@@ -10,19 +9,19 @@ const LOGIN = (socket) => (payload) => {
             
             let packet = {
                 username: user.username,
-                content: 'entered the chat',
+                content: `${user.username} entered the chat`,
                 meta: true
             }
-            
+            console.log('auth packet', packet);
             socket.broadcast.emit("USER_CONNECTED", packet);
         })
 }
 
 const LOGOUT = (socket) => (payload) => {
-    
+
     let packet = {
         username: socket.username,
-        content: 'left the chat',
+        content: `${user.username} left the chat`,
         meta: true
     }
     

@@ -10,16 +10,13 @@ export const ioMiddleware = (store) => (next) => (action) => {
 }
 
 export default (store, subscribers) => {
-
-    Object.keys(subscribers)
+    Object.keys(subscribers.default)
         .map(type => {
-            let handler = subscribers[type];
+            let handler = subscribers.default[type];
             return {type, handler};
         })
         .forEach(subscriber => {
-            
             socket.on( subscriber.type, (payload) => {
-                
                 console.log("_SUBSCRIBE_EVENT_", subscriber.type, payload);
                 try {
                     let fakeStore = {
@@ -35,7 +32,7 @@ export default (store, subscribers) => {
                     console.error("_SUBSCRIBE_ERROR_", e.message);
                 }
             })
-        
+
                    
     })
 }

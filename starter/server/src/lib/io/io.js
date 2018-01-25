@@ -17,6 +17,7 @@ export default (http) => {
                     return {type,handler};
                 })
                 .forEach(subscriber => {
+                    console.log('server subscriber: ', subscriber);
                     socket.on(subscriber.type, (payload) => {
                         console.log("_SUBSCRIBE_EVENT_", subscriber.type, payload);
                         try {

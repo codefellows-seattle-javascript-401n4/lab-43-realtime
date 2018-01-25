@@ -1,10 +1,7 @@
 export default (state=[], action) => {
-    
     let {type, payload} = action;
     
     switch(type) { 
-                
-        default:
             case 'LOGIN':
                 return[...state, payload];                    
 
@@ -20,8 +17,8 @@ export default (state=[], action) => {
             case 'MESSAGE':
                 return [...state, payload];
 
-            return state;
-        
+            default:
+                return state;
     }
     
 }
