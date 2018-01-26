@@ -1,6 +1,9 @@
 401 JS --  Lab 43 Socket IO
 ===
+David's Description
 
+
+===
 ## Submission Instructions
 * continue working from lab 42
   
