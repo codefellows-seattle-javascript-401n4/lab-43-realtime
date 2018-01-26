@@ -1,7 +1,5 @@
-export default (state=false, action) => {
-    
-    let {type, payload} = action;
-    
+export default (state=[], {type, payload}) => {
+        
     switch(type) {
         case "LOGIN":
             return true;

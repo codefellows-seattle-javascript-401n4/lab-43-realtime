@@ -20,6 +20,8 @@ class Login extends React.Component {
 		let QueryString = querystring.stringify(options);
 		
 		let authURL = `${googleURL}?${QueryString}`;
+		console.log('authURL is ', authURL);
+		console.log('redirect_Uril is ', options.redirect_uri)
         
         return (
             <React.Fragment>

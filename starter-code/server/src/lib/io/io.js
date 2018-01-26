@@ -10,9 +10,22 @@ export default (http) => {
         // This will run when the client first connects to our socket
         // It registers all of the listeners for THEM
         .on('connection', (socket) => {
+
             Object.keys(subscribers)
-                .map(type => ({ type, handler: subscribers[type] }))
+                .map(type => {
+                   let handler = subscribers[type]; 
+                   return {type, handler}
+                })
                 .forEach(subscriber => {
+                    socket.on(subscriber.type, (payload) => {
+                        console.log("_SUBSCRIBE_EVENT_", subscriber.type, payload);                        
+                        try {
+                            subscriber.handler(socket)(payload);                            
+                        }
+                        catch(e) {  
+                           console.error("SUBSCRIBER_ERROR: ", e.message)
+                       }
+                    })
                     // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
                 })
         })
