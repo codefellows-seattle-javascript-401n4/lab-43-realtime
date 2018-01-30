@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as util from '../../lib/__';
+import {store} from '../../app/store';
+import io from './io';
+import subscribers from './subscribers';
 
 // Our Redux Actions
 import * as chatActions from './actions';
@@ -12,6 +15,8 @@ import * as chatActions from './actions';
 // TODO: import server message subscribers
 
 // TODO: call io() with the store and our subscribers
+
+io(store, subscribers);
 
 class Chat extends React.Component {
     
@@ -27,7 +32,13 @@ class Chat extends React.Component {
     }
 
     handleSubmit(e){
-        e.preventDefault()
+        e.preventDefault();
+        e.target.reset();
+        let packet = {
+            content: this.state.content,
+            meta:true
+        }
+        this.props.message(packet);
         // Call the messageCreate action with a packet for the server (meta and content)
     }
     
@@ -38,6 +49,10 @@ class Chat extends React.Component {
             <div className='chat-container'>
                 
                 <ul>
+                 { 
+                    this.props.chat.map((message,i) => 
+                      <li key={i}>{message.content}</li>)
+                 }
                 </ul>
                 
                 <form onSubmit={this.handleSubmit}>
@@ -55,10 +70,12 @@ class Chat extends React.Component {
 
 // TODO: map state.chat to props
 export const mapStateToProps = (state) => ({
+    chat: state.chat
 })
 
 // TODO: map the "message" chat action
 export const mapDispatchToProps = (dispatch) => ({
+    message: (data) => dispatch(chatActions.message(data))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Chat);

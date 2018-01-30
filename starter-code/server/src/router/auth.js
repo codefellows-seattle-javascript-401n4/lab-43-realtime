@@ -78,6 +78,7 @@ export default new Router()
     
     .get('/oauth/google/code', (req, res, next) => {
       
+        console.log('HELLO FROM OAAUTH')
         let code = req.query.code;
       
         console.log('(1) code', code);
