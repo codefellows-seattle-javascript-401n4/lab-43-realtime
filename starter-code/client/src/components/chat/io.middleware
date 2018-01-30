@@ -7,7 +7,11 @@ const socket = io(`${__API_URL__}`)
 // TODO: Create middleware
 //       Ensure that the action is an object, isn't blocked
 //       Emit it (type,payload)to the socket.
+//       fix bug that's about to happen (hint: blocking a flood)
 
 export default (store) => (next) => (action) => {
+  if(typeof action === 'object' && ! action.blocked) {
+    socket.emit(action.type, action.payload);
+  }
   next(action)
 }
