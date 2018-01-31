@@ -5,13 +5,12 @@ import * as util from '../../lib/__';
 // Our Redux Actions
 import * as chatActions from './actions';
 
-// TODO: Import io ibrary that connects to the server and dispatches messages to our actions via subscribers
+import io from './io';
+import {store} from '../../app/store';
 
-// TODO: Import the redux store that was created in main.js (need to pass this to the io library)
+import * as subscribers from './subscribers';
 
-// TODO: import server message subscribers
-
-// TODO: call io() with the store and our subscribers
+io(store,subscribers);
 
 class Chat extends React.Component {
     
@@ -28,7 +27,11 @@ class Chat extends React.Component {
 
     handleSubmit(e){
         e.preventDefault()
-        // Call the messageCreate action with a packet for the server (meta and content)
+        let packet = {
+            content: this.state,
+            meta: true,
+        }
+        this.props.message(packet)
     }
     
     render() {
@@ -55,10 +58,12 @@ class Chat extends React.Component {
 
 // TODO: map state.chat to props
 export const mapStateToProps = (state) => ({
+    chat: state.chat,
 })
 
 // TODO: map the "message" chat action
 export const mapDispatchToProps = (dispatch) => ({
+    message: (data) => dispatch(chatActions.messsage(data))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Chat);

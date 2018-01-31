@@ -13,7 +13,15 @@ export default (http) => {
             Object.keys(subscribers)
                 .map(type => ({ type, handler: subscribers[type] }))
                 .forEach(subscriber => {
-                    // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
+                    socket.on(subscriber.type, (payload) => {
+                        console.log('_SUBSCRIBE_EVENT_', subscriber.type, payload)
+                        try{
+                            subscriber.handler(payload);
+                        }
+                        catch(e){
+                            console.error('_SUBSCRIBER_ERROR__', e.message);
+                        }
+                    })
                 })
         })
         .on('error', (error) => {

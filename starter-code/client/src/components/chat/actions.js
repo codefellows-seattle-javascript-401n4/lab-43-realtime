@@ -1,6 +1,14 @@
-// all payloads: 
-// {username: string, meta: bool, content: string}
+export const connect = (payload) => ({
+  type: 'USER_CONNECTED',
+  payload: payload
+})
 
-// Actions will be dispatched from subscribers that hear messages coming directly to us from the server!
+export const disconnect = (payload) => ({
+  type: 'USER_DISCONNECTED',
+  payload: payload
+})
 
-// TODO: Create actions: USER_CONNECTED, USER_DISCONNECTED, MESSAGE
+export const message = (payload) => ({
+  type: 'MESSAGE',
+  payload: payload
+})

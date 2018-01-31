@@ -7,13 +7,21 @@ export const socket = io(`${__API_URL__}`)
 export default (store, subscribers) => {
 
     Object.keys(subscribers)
-        .map(type => ({type, handler: subscribers[type]})) // returns an array of subscribers
+        .map(type => {
+            let handler = subscribers.type;
+            return {type, handler};
+        })
         .forEach(subscriber => {
+            socket.on(subsriber.type, (payload) => {
+                console.log('__SUBSCRIBER_EVENT__', subscriber.type, payload);
+                try{
+                    subscriber.handler(store)(socket)(payload);
+                }
+                catch(e){
+                    console.error('__SUBSCRIBER_ERROR__', e.message);
+                }
+            })
         
-            // TODO: do a socket.on for each type, with a function that takes payload
-          
-            // TODO: call the handler with (store or fakeStore)(socket)(payload)
-          
             // TODO: Create a fakeStore (with dispatch, getState) where the dispatch blocks the action via property
                    // The fake store just calls real store.dispatch and store.getState
                    // This prevents actions being run until they are complete

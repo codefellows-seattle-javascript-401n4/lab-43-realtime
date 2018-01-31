@@ -13,12 +13,11 @@ import authRouter from '../router/auth.js'
 import fourOhFour from '../middleware/four-oh-four.js'
 import errorHandler from '../middleware/error-middleware.js'
 
-// TODO: Import io library
-
+import io from './io/io'
 // STATE
 const app = express()
 
-// global middleware
+// global middleware£
 app.use(morgan('dev'))
 app.use(cors({
   origin: process.env.CORS_ORIGINS.split(' '),
@@ -46,7 +45,7 @@ export const start = (port) => {
     mongo.start()
     .then(() => {
       state.http = Server(app);
-      //TODO: Initialize io() with state.http
+      io(state.http);
       state.http.listen(port || process.env.PORT, () => {
         console.log('__SERVER_UP__', process.env.PORT)
         resolve()
