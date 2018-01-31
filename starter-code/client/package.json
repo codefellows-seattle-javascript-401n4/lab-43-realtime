@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest -i --verbose",
-    "watch": "webpack-dev-server --inline --hot --public $C9_HOSTNAME --host $IP --port $PORT",
+    "watch": "webpack-dev-server --inline --hot",
     "build": "webpack"
   },
   "jest": {
@@ -46,8 +46,8 @@
     "style-loader": "^0.19.1",
     "superagent": "^3.8.1",
     "uuid": "^3.1.0",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.5"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
