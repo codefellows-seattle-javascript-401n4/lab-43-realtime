@@ -1,22 +1,35 @@
-import io from 'socket.io'
+import io from 'socket.io';
 
-import authSubscriber from "./subscribers/auth";
-import messageSubscriber from "./subscribers/message";
+import authSubscriber from './subscribers/auth';
+import messageSubscriber from './subscribers/message';
 
-const subscribers = Object.assign({}, authSubscriber, messageSubscriber)
+const subscribers = Object.assign({}, authSubscriber, messageSubscriber);
 
 export default (http) => {
-    return io(http)
-        // This will run when the client first connects to our socket
-        // It registers all of the listeners for THEM
-        .on('connection', (socket) => {
-            Object.keys(subscribers)
-                .map(type => ({ type, handler: subscribers[type] }))
-                .forEach(subscriber => {
-                    // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
-                })
+  return io(http)
+  // This will run when the client first connects to our socket
+  // It registers all of the listeners for THEM
+    .on('connection', (socket) => {
+      Object.keys(subscribers)
+        .map(type => {
+          let handler = subscribers[type];
+          return {type, handler};
         })
-        .on('error', (error) => {
-            console.error('__SOCKET_IO_ERROR__', error)
-        })
-}
+        .forEach(subscriber => {
+          // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
+          socket.on(subscriber.type, payload => {
+            console.log('_SUBSCRIBE_EVENT_', subscriber.type, payload);
+            try {
+              subscriber.handler(socket)(payload);
+            }
+
+            catch(err){
+              console.error('_SUBSCRIBER_ERROR_', err.message);
+            }
+          });
+        });
+    })
+    .on('error', (error) => {
+      console.error('__SOCKET_IO_ERROR__', error);
+    });
+};

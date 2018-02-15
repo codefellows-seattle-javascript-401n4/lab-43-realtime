@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest -i --verbose",
-    "watch": "webpack-dev-server --inline --hot --public $C9_HOSTNAME --host $IP --port $PORT",
+    "watch": "webpack-dev-server --inline --hot",
     "build": "webpack"
   },
   "jest": {
@@ -42,6 +42,7 @@
     "redux": "^3.7.2",
     "resolve-url-loader": "^2.2.0",
     "sass-loader": "^6.0.6",
+    "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "style-loader": "^0.19.1",
     "superagent": "^3.8.1",
