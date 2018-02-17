@@ -5,7 +5,7 @@ const MESSAGE = store => socket => payload => {
 };
 
 const USER_CONNECTED = store => socket => payload => {
-  store.disptach(chatActions.connect(payload));
+  store.dispatch(chatActions.connect(payload));
 };
 
 const USER_DISCONNECTED = store => socket => payload => {

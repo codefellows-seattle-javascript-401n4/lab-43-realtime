@@ -16,7 +16,6 @@ export default (http) => {
           return {type, handler};
         })
         .forEach(subscriber => {
-          // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
           socket.on(subscriber.type, payload => {
             console.log('_SUBSCRIBE_EVENT_', subscriber.type, payload);
             try {

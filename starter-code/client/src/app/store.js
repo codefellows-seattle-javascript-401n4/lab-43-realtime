@@ -3,6 +3,6 @@ import {createStore, applyMiddleware} from 'redux';
 import reducer from './reducer/';
 import reporter from '../middleware/reporter';
 import thunk from '../middleware/thunk';
-import reduxIO from '../components/chat/io.middleware';
+import {ioMiddleware} from '../components/chat/io';
 
-export const store = createStore(reducer, applyMiddleware(reduxIO, thunk,reporter));
+export const store = createStore(reducer, applyMiddleware(ioMiddleware, thunk,reporter));

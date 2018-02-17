@@ -7,7 +7,6 @@ import {Provider} from 'react-redux'
 
 import App from './components/app'
 
-// TODO: instead of pulling in createStore and creating it here, pull in created store as an import
 import {store} from './app/store'
 
 class Main extends React.Component {
