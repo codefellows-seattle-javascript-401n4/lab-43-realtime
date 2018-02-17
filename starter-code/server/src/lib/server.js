@@ -49,7 +49,7 @@ export const start = (port) => {
         state.http = Server(app);
         //TODO: Initialize io() with state.http
         io(state.http);
-        state.http.listen(port || process.env.PORT, () => {
+        state.http.listen(process.env.PORT, () => {
           console.log('__SERVER_UP__', process.env.PORT);
           resolve();
         });
