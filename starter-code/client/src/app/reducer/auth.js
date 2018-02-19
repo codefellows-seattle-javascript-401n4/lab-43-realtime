@@ -1,14 +1,16 @@
+// TODO: Handle LOGIN & LOGOUT
+
+
+
 export default (state=false, action) => {
-    
     let {type, payload} = action;
-    
     switch(type) {
-        case "LOGIN":
+        case 'LOGIN':
             return true;
-            
-        case "LOGOUT":
+
+        case 'LOGOUT':
             return false;
-            
+
         default:
             return state;
     }

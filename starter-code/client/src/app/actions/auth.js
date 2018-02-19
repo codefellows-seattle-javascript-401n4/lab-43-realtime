@@ -1,5 +1,3 @@
-/* global __API_URL__ */
-
 import superagent from 'superagent';
 import cookie from 'react-cookies';
 
@@ -11,7 +9,6 @@ export const validate = () => (dispatch) => {
         superagent.get(`${__API_URL__}/user`)
             .set('Authorization', `Bearer ${token}`)
             .then( response => {
-                console.log(token, response.body);
                 dispatch(loginAction(response.body));
             })
             .catch(console.error);
@@ -33,5 +30,6 @@ const loginAction = (user) => ({
 });
 
 const logoutAction = (user) => ({
-    type: "LOGOUT"
+    type: "LOGOUT",
+    payload: user
 });

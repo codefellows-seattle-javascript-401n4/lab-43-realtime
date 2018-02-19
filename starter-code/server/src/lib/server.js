@@ -6,14 +6,14 @@ import morgan from 'morgan'
 import express from 'express'
 import * as mongo from './mongo.js'
 
-// NOTE: Pulling in Server from http so that we can call on it directly
+
 import {Server} from 'http'
 
 import authRouter from '../router/auth.js'
 import fourOhFour from '../middleware/four-oh-four.js'
 import errorHandler from '../middleware/error-middleware.js'
 
-// TODO: Import io library
+import io from "./io/io"; 
 
 // STATE
 const app = express()
@@ -37,7 +37,6 @@ const state = {
   http: null,
 }
 
-// INTERFACE 
 export const start = (port) => {
   return new Promise((resolve, reject) => {
     if (state.isOn) 
@@ -46,7 +45,7 @@ export const start = (port) => {
     mongo.start()
     .then(() => {
       state.http = Server(app);
-      //TODO: Initialize io() with state.http
+      io(state.http);
       state.http.listen(port || process.env.PORT, () => {
         console.log('__SERVER_UP__', process.env.PORT)
         resolve()

@@ -1,34 +1,36 @@
+// TODO: Create a "Profile" component
+// TODO: Needs to bring in the users profile from state, let them change their username, and save to server + update app state
+
 import React from 'react';
 import {connect} from 'react-redux';
 import * as profileActions from '../app/actions/profile';
 
 class Profile extends React.Component {
-    
+
     constructor(props) {
         super(props);
-        
         this.state = this.props.profile || { username:'' };
-        
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     componentWillReceiveProps(props) {
         if(this.props.profile) { this.setState(this.props.profile) }
     }
-    
+
     handleChange(e) {
         let {name,value} = e.target;
         this.setState( {[name]: value} );
     }
-    
-    handleSubmit(e) { 
+
+    handleSubmit(e) {
         e.preventDefault();
         this.props.updateUser(this.state);
     }
-    
+
     render() {
-        
+
         return (
             <React.Fragment>
                 Welcome, {this.state.username}

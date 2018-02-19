@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import Header from './header'
 import Footer from './footer'
 import Navbar from './navbar'
-import Chat from './chat/'
+import Chat from './chat'
 import Login from './login'
 import Profile from './profile'
 

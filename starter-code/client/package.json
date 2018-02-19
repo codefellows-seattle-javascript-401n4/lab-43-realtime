@@ -1,11 +1,11 @@
 {
-  "name": "counter",
+  "name": "Larry",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest -i --verbose",
-    "watch": "webpack-dev-server --inline --hot --public $C9_HOSTNAME --host $IP --port $PORT",
+    "watch": "webpack-dev-server --inline --hot",
     "build": "webpack"
   },
   "jest": {
@@ -26,6 +26,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.7",
     "dotenv": "^4.0.0",
     "enzyme-adapter-react-16": "^1.1.0",
@@ -42,7 +43,7 @@
     "redux": "^3.7.2",
     "resolve-url-loader": "^2.2.0",
     "sass-loader": "^6.0.6",
-    "socket.io-client": "^2.0.4",
+    "socket.io": "^2.0.4",
     "style-loader": "^0.19.1",
     "superagent": "^3.8.1",
     "uuid": "^3.1.0",
