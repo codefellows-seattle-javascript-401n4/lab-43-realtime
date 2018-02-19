@@ -25,7 +25,7 @@ export default new Router()
                 .then( record => res.send(record) )
                 .catch(next);
     
-        }
+        }   
         catch(e) {
             next(e.message);
         }
@@ -46,7 +46,6 @@ export default new Router()
         new User.createFromSignup(req.body)
             .then(user => user.tokenCreate())
             .then(token => {
-                console.log("(signup) Token", token);
                 res.cookie('X-BBB-Token', token);
                 res.send(token);
             })
@@ -69,7 +68,6 @@ export default new Router()
         
         req.user.tokenCreate()
             .then((token) => {
-                console.log("(login) Token", token);
                 res.cookie('X-BBB-Token', token);
                 res.send(token);
             })
@@ -111,11 +109,9 @@ export default new Router()
                 return User.createFromOAuth(googleUser);
             })
             .then ( user => {
-                console.log("(4) Our User", user);
                 return user.tokenCreate();
             })
             .then ( token => {
-                console.log("(5) Token", token);
                 res.cookie('X-BBB-Token', token);
                 res.redirect(URL);
             }) 

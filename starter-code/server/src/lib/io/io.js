@@ -6,14 +6,27 @@ import messageSubscriber from "./subscribers/message";
 const subscribers = Object.assign({}, authSubscriber, messageSubscriber)
 
 export default (http) => {
+    
     return io(http)
-        // This will run when the client first connects to our socket
-        // It registers all of the listeners for THEM
+
         .on('connection', (socket) => {
+            
             Object.keys(subscribers)
-                .map(type => ({ type, handler: subscribers[type] }))
+                .map( type => {
+                    let handler = subscribers[type];
+                    return {type,handler};
+                })
                 .forEach(subscriber => {
-                    // TODO: do a "socket.on" for the subscriber.type that takes payload and tries to run its handler
+                    console.log('server subscriber: ', subscriber);
+                    socket.on(subscriber.type, (payload) => {
+                        console.log("_SUBSCRIBE_EVENT_", subscriber.type, payload);
+                        try {
+                            subscriber.handler(socket)(payload);
+                        }
+                        catch(e) {
+                            console.error("_SUBSCRIBER_ERROR_", e.message);
+                        }
+                    })
                 })
         })
         .on('error', (error) => {

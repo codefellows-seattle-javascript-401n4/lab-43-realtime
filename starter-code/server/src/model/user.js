@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import {randomBytes} from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import createError from 'http-errors';
-import promisify from '../lib/promisify.js';
+import {promisify} from '../lib/promisify.js';
 import Mongoose, {Schema} from 'mongoose';
 import faker from 'faker';
 
@@ -28,18 +28,15 @@ userSchema.methods.passwordCompare = function(password){
         });
 };
 
-userSchema.methods.tokenCreate = function(){
+userSchema.methods.tokenCreate    = function(){
   
     this.tokenSeed = randomBytes(32).toString('base64');
   
-    console.log('tokenCreate - seed', this.tokenSeed, this);
     return this.save()
         .then(user => {
-            console.log('tokenCreate - user', user)
             return jwt.sign({tokenSeed: this.tokenSeed}, process.env.SECRET);
         })
         .then(token => {
-            console.log('tokenCreate - token', token);
             return token;
         });
     
@@ -106,6 +103,5 @@ User.createFromOAuth = function (OAuthUser) {
   
     
 };
-
 // INTERFACE
 export default User;

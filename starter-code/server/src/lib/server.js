@@ -6,14 +6,14 @@ import morgan from 'morgan'
 import express from 'express'
 import * as mongo from './mongo.js'
 
-// NOTE: Pulling in Server from http so that we can call on it directly
+
 import {Server} from 'http'
 
 import authRouter from '../router/auth.js'
 import fourOhFour from '../middleware/four-oh-four.js'
 import errorHandler from '../middleware/error-middleware.js'
 
-import io from "./io/io";
+import io from "./io/io"; 
 
 // STATE
 const app = express()
@@ -22,7 +22,7 @@ const app = express()
 app.use(morgan('dev'))
 app.use(cors({
   origin: process.env.CORS_ORIGINS.split(' '),
-  credentials: true,
+  credentials: true, 
 }))
 
 // routers
@@ -33,14 +33,13 @@ app.use(fourOhFour)
 app.use(errorHandler)
 
 const state = {
-  isOn: false,
+  isOn: false, 
   http: null,
 }
 
-// INTERFACE
 export const start = (port) => {
   return new Promise((resolve, reject) => {
-    if (state.isOn)
+    if (state.isOn) 
       return reject(new Error('USAGE ERROR: the state is on'))
     state.isOn = true
     mongo.start()

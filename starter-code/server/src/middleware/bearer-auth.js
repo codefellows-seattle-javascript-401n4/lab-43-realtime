@@ -13,9 +13,8 @@ export default (req, res, next) => {
     return next(createError(400, 'AUTH ERROR: not bearer auth'))
 
   promisify(jwt.verify)(token, process.env.SECRET)
-  .then(({tokenSeed}) => User.findOne({tokenSeed}))
+  .then(({randomHash}) => User.findOne({randomHash}))
   .then((user) => {
-    console.log("JWT USER", token, user);
     if(!user)
       throw createError(401, 'AUTH ERROR: user not found')
     req.user = user
